@@ -66,8 +66,8 @@ namespace FundooNotes.Controllers
                 return this.BadRequest(new { Success = false, Message = e.Message });
             }
         }
-        [AllowAnonymous]
-        [HttpPut("ForgetPassword")]
+        
+        [HttpPost("forgetPassword")]
         public IActionResult ForgotPassword(string email)
         {
             try
@@ -92,7 +92,7 @@ namespace FundooNotes.Controllers
                 return BadRequest(new { success = false, e.Message });
             }
         }
-        [AllowAnonymous]
+        [Authorize]
         [HttpPut("resetpassword")]
         public ActionResult ResetPassword( string password, string cPassword)
         {
