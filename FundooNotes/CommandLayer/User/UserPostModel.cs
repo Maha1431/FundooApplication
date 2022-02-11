@@ -23,8 +23,8 @@ namespace CommonLayer.User
         ErrorMessage = "Please enter a valid Address")]
         public string adddress { get; set; }
 
-        [RegularExpression(@"^[a-z0-9]+@[a-z0-9].[a-z]{2,4}$",
-        ErrorMessage = "Please enter a valid Email Address")]
+        [RegularExpression(@"^[A-Z0-9a-z]{1,}([.#$^_-][A-Za-z0-9]+)?[@][A-Za-z]{2,}[.][A-Za-z]{2,3}([.][a-zA-Z]{2})?$",
+        ErrorMessage = "Please check ur  Email Address")]
         public string email { get; set; }
 
         [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",

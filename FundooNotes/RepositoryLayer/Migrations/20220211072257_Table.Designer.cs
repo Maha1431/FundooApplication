@@ -10,8 +10,8 @@ using RepositoryLayer.Services;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooNotesDbContext))]
-    [Migration("20220204093226_UserTable")]
-    partial class UserTable
+    [Migration("20220211072257_Table")]
+    partial class Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,51 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CommandLayer.User.User", b =>
+            modelBuilder.Entity("CommonLayer.Notes.Notes", b =>
+                {
+                    b.Property<int>("noteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReminder")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTrash")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.HasKey("noteId");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("notes");
+                });
+
+            modelBuilder.Entity("CommonLayer.User.User", b =>
                 {
                     b.Property<int>("Userid")
                         .ValueGeneratedOnAdd()
@@ -62,6 +106,17 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("CommonLayer.Notes.Notes", b =>
+                {
+                    b.HasOne("CommonLayer.User.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
