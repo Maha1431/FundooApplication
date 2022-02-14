@@ -56,12 +56,11 @@ namespace RepositoryLayer.Class
                 user.adddress = userPostModel.adddress;
                 user.email = userPostModel.email;
                 user.password = StringCipher.Encrypt(userPostModel.password);
-              //  user.password = StringCipher.Decrypt(userPostModel.password);
                 user.cpassword = userPostModel.cpassword;
                 user.registereddate = DateTime.Now;
                 dbContext.users.Add(user);
                 dbContext.SaveChanges();
-                //await dbcontext.SavechangesAsync()
+              
             }
             catch (Exception e)
             {

@@ -58,8 +58,6 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("noteId");
 
-                    b.HasIndex("userId");
-
                     b.ToTable("notes");
                 });
 
@@ -104,17 +102,6 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("users");
-                });
-
-            modelBuilder.Entity("CommonLayer.Notes.Notes", b =>
-                {
-                    b.HasOne("CommonLayer.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

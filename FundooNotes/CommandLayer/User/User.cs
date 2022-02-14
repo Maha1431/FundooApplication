@@ -11,6 +11,7 @@ namespace CommonLayer.User
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
+        
         public int Userid { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
@@ -21,6 +22,8 @@ namespace CommonLayer.User
         public string cpassword { get; set; }
         public DateTime registereddate { get; set; }
         public DateTime  modifieddate { get; set; }
+
+       // public virtual ICollection<Notes.Notes> notes { get; set; }
 
 
     }

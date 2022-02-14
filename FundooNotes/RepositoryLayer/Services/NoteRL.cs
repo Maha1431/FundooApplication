@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Notes;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Interface;
 using System;
@@ -30,11 +31,9 @@ namespace RepositoryLayer.Services
                 note.Description = notePost.Description;
                 note.IsReminder = notePost.IsReminder;
                 note.CreatedDate = DateTime.Now;
-                note.ModifiedDate = notePost.ModifiedDate;
                 note.color = notePost.color;
                 note.IsArchive = note.IsArchive;
                 dbContext.notes.Add(note);
-               // dbContext.SaveChanges();
                 await dbContext.SaveChangesAsync();     
             }
             catch(Exception e)
@@ -43,5 +42,102 @@ namespace RepositoryLayer.Services
             }
         }
 
+        public  bool UpdateNote(int noteId, NotePostModel notePost)
+        {
+            try
+            {
+                Notes notes = dbContext.notes.Where(e => e.noteId == noteId).FirstOrDefault();
+                notes.Title = notePost.Title;
+                notes.Description = notePost.Description;
+                notes.color = notePost.color;
+                notes.IsReminder = notePost.IsReminder;
+                notes.IsArchive = notePost.IsArchive;
+                notes.IsTrash = notePost.IsTrash;
+                notes.IsPin = notePost.IsPin;
+                dbContext.notes.Update(notes);
+                var result = dbContext.SaveChangesAsync();
+                if (result != null)
+                {
+                  return true;
+                }
+                else
+                    return false;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        public IEnumerable<Notes> GetAllNotes()
+        {
+            return dbContext.notes.ToList();
+        }
+
+        public bool DeleteNote(int noteId)
+        {
+            Notes notes = dbContext.notes.Where(e => e.noteId == noteId).FirstOrDefault();
+            if (notes != null)
+            {
+                dbContext.notes.Remove(notes);
+                dbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public async Task<List<Notes>> changeColor(int noteId, string color)
+        {
+            try
+            {
+                var note = dbContext.notes.FirstOrDefault(u => u.noteId == noteId);
+                note.color = color;
+                await dbContext.SaveChangesAsync();
+                return await dbContext.notes.ToListAsync();
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task ArchieveNote(int noteId)
+        {
+            try
+            {
+                var note = dbContext.notes.FirstOrDefault(u => u.noteId == noteId);
+                note.IsArchive = true;
+                await dbContext.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        public bool IsPin(int noteId)
+        {
+            try
+            {
+                Notes notes = dbContext.notes.Where(e => e.noteId == noteId).FirstOrDefault();
+                if (notes != null)
+                {
+                    return true;
+                }
+                else
+                {
+
+                    return false;
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
     }
 }

@@ -10,7 +10,7 @@ using RepositoryLayer.Services;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooNotesDbContext))]
-    [Migration("20220211072257_Table")]
+    [Migration("20220214115715_Table")]
     partial class Table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,8 +60,6 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("noteId");
 
-                    b.HasIndex("userId");
-
                     b.ToTable("notes");
                 });
 
@@ -106,17 +104,6 @@ namespace RepositoryLayer.Migrations
                         .HasFilter("[email] IS NOT NULL");
 
                     b.ToTable("users");
-                });
-
-            modelBuilder.Entity("CommonLayer.Notes.Notes", b =>
-                {
-                    b.HasOne("CommonLayer.User.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

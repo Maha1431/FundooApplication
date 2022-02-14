@@ -11,15 +11,13 @@ namespace CommonLayer.Notes
         /*[Required]
         public int noteId { get; set; }
         [Required]
-        public int userId { get; set; }*/
-        [Required]
+        public int userId { get; set; }
+        [Required]*/
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
         [Required]
         public bool IsReminder { get; set; }
-        [Required]
-        public DateTime ModifiedDate { get; set; }
         [Required]
         public string color { get; set; }
         [Required]
