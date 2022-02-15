@@ -10,6 +10,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using BusinessLayer.Services;
 using RepositoryLayer.Entities;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace FundooNotes.Controllers
 {
@@ -17,6 +19,8 @@ namespace FundooNotes.Controllers
     [Route("[Controller]")]
     public class NoteController : ControllerBase
     {
+        private readonly IMemoryCache memoryCache;
+        private readonly IDistributedCache distributedCache;
         INoteBL noteBL;
         FundooNotesDbContext DbContext;
         public NoteController(INoteBL noteBL, FundooNotesDbContext DbContext)
@@ -24,16 +28,17 @@ namespace FundooNotes.Controllers
             this.noteBL = noteBL;
             this.DbContext = DbContext;
         }
-       // [Authorize]
+        [Authorize]
         [HttpPost("addNotes")]
-        public async Task<IActionResult> AddNotes(int userId,NotePostModel notePost)
+        public async Task<IActionResult> AddNotes(NotePostModel notePost)
         {
             try
-            {/*
-                var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("userId", StringComparison.InvariantCultureIgnoreCase));
-                int UserId = Int32.Parse(userId.Value);
-                await this.noteBL.AddNote(UserId, notePost);*/
-               await this.noteBL.AddNote(userId,notePost);
+            {
+                /* var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("userId", StringComparison.InvariantCultureIgnoreCase));
+                 int UserId = Int32.Parse(userId.Value);*/
+                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userId").Value);
+                await this.noteBL.AddNote(userId, notePost);
+              
                 return this.Ok(new { success = true, Message = $"Registration is successfull" });
             }
             catch (Exception e)

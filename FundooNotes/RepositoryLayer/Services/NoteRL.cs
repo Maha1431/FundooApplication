@@ -25,9 +25,10 @@ namespace RepositoryLayer.Services
         {
             try
             {
-               var user = dbContext.users.FirstOrDefault(x => x.Userid == userId);
+              // var user = dbContext.users.FirstOrDefault(x => x.Userid == userId);
                 Notes note = new Notes();
                 note.noteId = new Notes().noteId;
+                note.Userid = userId;
                 note.Title = notePost.Title;
                 note.Description = notePost.Description;
                 note.IsReminder = notePost.IsReminder;

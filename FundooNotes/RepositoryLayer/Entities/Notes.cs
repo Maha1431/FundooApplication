@@ -13,7 +13,8 @@ namespace RepositoryLayer.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int noteId { get; set; }
-        public int userId { get; set; }
+        [ForeignKey("User")]
+        public int Userid { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsReminder { get; set; }
@@ -26,7 +27,7 @@ namespace RepositoryLayer.Entities
       
 
         
-      //  public  User.User user { get; set; }
+       public  virtual User user { get; set; }
 
     }
 }
