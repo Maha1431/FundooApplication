@@ -61,7 +61,7 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
-       // [Authorize]
+       
         [HttpGet("getallnotes")]
         public IEnumerable<Notes> GetAllNotes()
         {
