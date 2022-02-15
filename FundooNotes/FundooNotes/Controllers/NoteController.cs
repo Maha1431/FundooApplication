@@ -41,8 +41,8 @@ namespace FundooNotes.Controllers
             {
                 /* var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("userId", StringComparison.InvariantCultureIgnoreCase));
                  int UserId = Int32.Parse(userId.Value);*/
-                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userId").Value);
-                await this.noteBL.AddNote(userId, notePost);
+                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Userid").Value);
+                await this.noteBL.AddNote(userId,notePost);
               
                 return this.Ok(new { success = true, Message = $"Registration is successfull" });
             }
@@ -73,7 +73,7 @@ namespace FundooNotes.Controllers
             }
         }
         // [Authorize]
-        [HttpGet("getAllNoteusingRedis")]
+        [HttpGet("getAllNotesusingRedis")]
         public async  Task<IActionResult> GetAllNotes()
         {
             try

@@ -19,11 +19,11 @@ namespace BusinessLayer.Services
         }
 
 
-        public async Task AddNote(int userId, NotePostModel notePost)
+        public async Task AddNote(int Userid, NotePostModel notePost)
         {
             try
             {
-                await noteRL.AddNote(userId, notePost);
+                await noteRL.AddNote(Userid, notePost);
             }
             catch (Exception e)
             {

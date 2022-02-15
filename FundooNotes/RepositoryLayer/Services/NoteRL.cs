@@ -21,14 +21,14 @@ namespace RepositoryLayer.Services
             this.dbContext = dbContext;
 
         }
-        public async Task AddNote(int userId, NotePostModel notePost)
+        public async Task AddNote(int UserId, NotePostModel notePost)
         {
             try
             {
               // var user = dbContext.users.FirstOrDefault(x => x.Userid == userId);
                 Notes note = new Notes();
                 note.noteId = new Notes().noteId;
-                note.Userid = userId;
+                note.Userid = UserId;
                 note.Title = notePost.Title;
                 note.Description = notePost.Description;
                 note.IsReminder = notePost.IsReminder;

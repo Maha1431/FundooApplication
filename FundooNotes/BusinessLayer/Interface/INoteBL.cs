@@ -9,7 +9,7 @@ namespace BusinessLayer.Interface
 {
     public interface INoteBL
     {
-        Task AddNote(int userId, NotePostModel notePost);
+        Task AddNote(int Userid, NotePostModel notePost);
 
         bool UpdateNote(int noteId, NotePostModel notePost);
 
