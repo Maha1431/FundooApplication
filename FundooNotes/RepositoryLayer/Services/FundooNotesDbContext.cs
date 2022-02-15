@@ -1,9 +1,9 @@
-﻿using CommonLayer.User;
+﻿using RepositoryLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CommonLayer.Notes;
+
 
 
 namespace RepositoryLayer.Services

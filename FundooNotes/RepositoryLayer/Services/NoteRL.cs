@@ -1,6 +1,7 @@
 ﻿using CommonLayer.Notes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using RepositoryLayer.Entities;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace RepositoryLayer.Services
                 note.Description = notePost.Description;
                 note.IsReminder = notePost.IsReminder;
                 note.CreatedDate = DateTime.Now;
+                note.ModifiedDate = DateTime.Now;
                 note.color = notePost.color;
                 note.IsArchive = note.IsArchive;
                 dbContext.notes.Add(note);
@@ -139,5 +141,19 @@ namespace RepositoryLayer.Services
             }
 
         }
+        public async Task Trash(int noteId)
+        {
+            try
+            {
+                var note = dbContext.notes.FirstOrDefault(u => u.noteId == noteId);
+                note.IsTrash = true;
+                await dbContext.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
     }
 }

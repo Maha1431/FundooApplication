@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using BusinessLayer.Services;
+using RepositoryLayer.Entities;
 
 namespace FundooNotes.Controllers
 {
@@ -41,7 +42,7 @@ namespace FundooNotes.Controllers
             }
         }
       
-        [HttpPut("updatenote")]
+        [HttpPut("updatenote/{noteId}")]
         public IActionResult  UpdateNotes(int noteId, NotePostModel notePost)
         {
             try
@@ -61,8 +62,8 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
-       // [Authorize]
-        [HttpGet("getallnotes")]
+        // [Authorize]
+        [HttpGet("getNote")]
         public IEnumerable<Notes> GetAllNotes()
         {
             try
@@ -76,7 +77,7 @@ namespace FundooNotes.Controllers
             }
         }
         //[Authorize]
-        [HttpDelete]
+        [HttpDelete("delete/{noteId}")]
         public IActionResult DeleteNote(int noteId)
         {
             try
@@ -99,7 +100,7 @@ namespace FundooNotes.Controllers
             }
         }
         //[Authorize]
-        [HttpPut("{noteId}/{color}")]
+        [HttpPut("changeColor/{noteId}/{color}")]
         public async Task<IActionResult> changeColor(int noteId, string color)
         {
             try
@@ -121,8 +122,8 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
-        [Authorize]
-        [HttpPut("{noteId}")]
+        
+        [HttpPut("ArchiveNote/{noteID}")]
         public async Task<IActionResult> IsArchieve(int noteId)
         {
             try
@@ -139,7 +140,7 @@ namespace FundooNotes.Controllers
 
 
         }
-        [HttpPut("pin")]
+        [HttpPut("pin/{noteId}")]
         public IActionResult Pin(int noteId)
         {
             try

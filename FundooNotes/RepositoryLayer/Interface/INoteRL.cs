@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Notes;
+using RepositoryLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,5 +22,7 @@ namespace RepositoryLayer.Interface
         Task ArchieveNote(int noteId);
 
         bool IsPin(int noteId);
+
+        Task Trash(int noteId);
     }
 }

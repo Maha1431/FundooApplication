@@ -1,7 +1,10 @@
 ﻿using CommonLayer.User;
+using RepositoryLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryLayer.Services;
+
 
 namespace RepositoryLayer.Interface
 {
