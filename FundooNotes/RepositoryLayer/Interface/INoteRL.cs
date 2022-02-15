@@ -13,7 +13,7 @@ namespace RepositoryLayer.Interface
 
         bool UpdateNote(int noteId, NotePostModel notePost);
 
-        IEnumerable<Notes> GetAllNotes();
+        Task<List<Notes>> GetAllNotes();
 
         bool DeleteNote(int noteId);
 
@@ -24,5 +24,7 @@ namespace RepositoryLayer.Interface
         bool IsPin(int noteId);
 
         Task Trash(int noteId);
-    }
+
+        
+}
 }

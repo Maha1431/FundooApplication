@@ -12,6 +12,8 @@ using BusinessLayer.Services;
 using RepositoryLayer.Entities;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace FundooNotes.Controllers
 {
@@ -23,10 +25,13 @@ namespace FundooNotes.Controllers
         private readonly IDistributedCache distributedCache;
         INoteBL noteBL;
         FundooNotesDbContext DbContext;
-        public NoteController(INoteBL noteBL, FundooNotesDbContext DbContext)
+        public NoteController(INoteBL noteBL, FundooNotesDbContext DbContext, IMemoryCache memoryCache, IDistributedCache distributedCache)
         {
             this.noteBL = noteBL;
             this.DbContext = DbContext;
+            this.memoryCache = memoryCache;
+            this.distributedCache = distributedCache;
+
         }
         [Authorize]
         [HttpPost("addNotes")]
@@ -68,12 +73,28 @@ namespace FundooNotes.Controllers
             }
         }
         // [Authorize]
-        [HttpGet("getNote")]
-        public IEnumerable<Notes> GetAllNotes()
+        [HttpGet("getAllNoteusingRedis")]
+        public async  Task<IActionResult> GetAllNotes()
         {
             try
             {
-                return noteBL.GetAllNotes();
+                var cacheKey = "NoteList";
+                string serializedNoteList;
+                var noteList = new List<Notes>();
+                var redisnoteList = await distributedCache.GetAsync(cacheKey);
+                if (redisnoteList != null)
+                {
+                    serializedNoteList = Encoding.UTF8.GetString(redisnoteList);
+                    noteList = JsonConvert.DeserializeObject<List<Notes>>(serializedNoteList);
+                }
+                else
+                {
+                    noteList = await noteBL.GetAllNotes();
+                    serializedNoteList = JsonConvert.SerializeObject(noteList);
+                    redisnoteList = Encoding.UTF8.GetBytes(serializedNoteList);
+                }
+                return this.Ok(noteList);
+              
             }
             catch (Exception)
             {
@@ -165,6 +186,7 @@ namespace FundooNotes.Controllers
                 throw e;
             }
         }
+       
     }
 }
 

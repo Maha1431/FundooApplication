@@ -13,7 +13,8 @@ namespace BusinessLayer.Interface
 
         bool UpdateNote(int noteId, NotePostModel notePost);
 
-        IEnumerable<Notes> GetAllNotes();
+        Task<List<Notes>> GetAllNotes();
+
 
         bool DeleteNote(int noteId);
 

@@ -45,12 +45,12 @@ namespace BusinessLayer.Services
                 throw e;
             }
         }
-        public IEnumerable<Notes> GetAllNotes()
+        public async Task<List<Notes>> GetAllNotes()
         {
 
             try
             {
-                return noteRL.GetAllNotes();
+                return await noteRL.GetAllNotes();
             }
             catch (Exception e)
             {

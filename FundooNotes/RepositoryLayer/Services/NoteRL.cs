@@ -71,9 +71,9 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
-        public IEnumerable<Notes> GetAllNotes()
+        public async Task<List<Notes>> GetAllNotes()
         {
-            return dbContext.notes.ToList();
+            return await dbContext.notes.ToListAsync();
         }
 
         public bool DeleteNote(int noteId)
