@@ -1,11 +1,11 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.User;
-using RepositoryLayer.Class;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RepositoryLayer.Services;
 
 namespace BusinessLayer.Services
 {

@@ -19,6 +19,31 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
+                {
+                    b.Property<int>("labelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LabelName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Userid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("noteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("labelId");
+
+                    b.HasIndex("Userid");
+
+                    b.HasIndex("noteId");
+
+                    b.ToTable("label");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Notes", b =>
                 {
                     b.Property<int>("noteId")
@@ -50,7 +75,7 @@ namespace RepositoryLayer.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Userid")
+                    b.Property<int?>("Userid")
                         .HasColumnType("int");
 
                     b.Property<string>("color")
@@ -106,20 +131,28 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Userid");
+
+                    b.HasOne("RepositoryLayer.Entities.Notes", "Notes")
+                        .WithMany()
+                        .HasForeignKey("noteId");
+
+                    b.Navigation("Notes");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Notes", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.User", "user")
-                        .WithMany("Notes")
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("Userid");
 
                     b.Navigation("user");
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entities.User", b =>
-                {
-                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }

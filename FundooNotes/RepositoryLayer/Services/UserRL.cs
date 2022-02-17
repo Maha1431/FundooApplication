@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 
 
 
-namespace RepositoryLayer.Class
+namespace RepositoryLayer.Services
 {
     public class UserRL : IUserRL
     {
@@ -76,12 +76,17 @@ namespace RepositoryLayer.Class
             try
             {
                 User user = new User();
-                var result = dbContext.users.Where(x => x.email == userLogin.email && x.password == userLogin.password);
+                var result = dbContext.users.Where(x => x.email == userLogin.email && x.password == userLogin.password).FirstOrDefault();
+                // int Id = (int)result.UserId;
+                int Id = result.Userid;
+                if (result != null)
+                    return GenerateJWTToken(userLogin.email, Id);
+                /*int id = result.Userid;
                 if (result != null)
                 {
-                    return GenerateJWTToken(userLogin.email, user.Userid);
+                    return GenerateJWTToken(userLogin.email, id);
 
-                }
+                }*/
                 else
                 {
                     return null;

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace RepositoryLayer.Interface
 {
-  public  interface INoteRL
+    public interface INoteRL
     {
-        Task AddNote(int Userid,  NotePostModel notePost);
+        Task AddNote(int Userid, NotePostModel notePost);
 
         bool UpdateNote(int noteId, NotePostModel notePost);
 
-        Task<List<Notes>> GetAllNotes();
+        Task<List<Notes>> GetAllNotes(int Userid);
 
         bool DeleteNote(int noteId);
 
@@ -23,8 +23,8 @@ namespace RepositoryLayer.Interface
 
         bool IsPin(int noteId);
 
-        Task Trash(int noteId);
+        Task TrashNote(int noteId);
 
-        
-}
+    }   
+
 }

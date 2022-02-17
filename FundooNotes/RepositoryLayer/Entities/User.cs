@@ -11,7 +11,6 @@ namespace RepositoryLayer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        
         public int Userid { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
@@ -23,7 +22,7 @@ namespace RepositoryLayer.Entities
         public DateTime registereddate { get; set; }
         public DateTime  modifieddate { get; set; }
 
-        public virtual ICollection<Notes> Notes { get; set; }
+       // public virtual ICollection<Notes> Notes { get; set; }
         
 
 

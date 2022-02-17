@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace CommonLayer.User
+namespace CommonLayer.Label
 {
-  public  class UserLogin
+   public class LabelModel
     {
        
-        public string email { get; set; }
-
+        [Required]
+        public string LabelName { get; set; }
         
+       
         
-        public string password { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace BusinessLayer.Interface
 
         bool UpdateNote(int noteId, NotePostModel notePost);
 
-        Task<List<Notes>> GetAllNotes();
+        Task<List<Notes>> GetAllNotes(int Userid);
 
 
         bool DeleteNote(int noteId);
@@ -23,5 +23,7 @@ namespace BusinessLayer.Interface
         Task ArchieveNote(int noteId);
 
         bool IsPin(int noteId);
+
+        Task TrashNote(int noteId);
     }
 }

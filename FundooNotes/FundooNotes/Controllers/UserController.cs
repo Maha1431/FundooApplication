@@ -67,7 +67,7 @@ namespace FundooNotes.Controllers
             }
         }
         
-        [HttpPost("forgetPassword")]
+        [HttpPost("forgetPassword/{email}")]
         public IActionResult ForgotPassword(string email)
         {
             try

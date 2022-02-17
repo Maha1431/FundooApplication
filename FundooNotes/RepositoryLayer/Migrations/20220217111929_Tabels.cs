@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class Table : Migration
+    public partial class Tabels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,7 @@ namespace RepositoryLayer.Migrations
                 {
                     noteId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Userid = table.Column<int>(type: "int", nullable: false),
+                    Userid = table.Column<int>(type: "int", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsReminder = table.Column<bool>(type: "bit", nullable: false),
@@ -53,8 +53,45 @@ namespace RepositoryLayer.Migrations
                         column: x => x.Userid,
                         principalTable: "users",
                         principalColumn: "Userid",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "label",
+                columns: table => new
+                {
+                    labelId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LabelName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    noteId = table.Column<int>(type: "int", nullable: true),
+                    Userid = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_label", x => x.labelId);
+                    table.ForeignKey(
+                        name: "FK_label_notes_noteId",
+                        column: x => x.noteId,
+                        principalTable: "notes",
+                        principalColumn: "noteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_label_users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_label_noteId",
+                table: "label",
+                column: "noteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_label_Userid",
+                table: "label",
+                column: "Userid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_notes_Userid",
@@ -71,6 +108,9 @@ namespace RepositoryLayer.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "label");
+
             migrationBuilder.DropTable(
                 name: "notes");
 

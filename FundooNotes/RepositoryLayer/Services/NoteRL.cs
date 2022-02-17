@@ -71,9 +71,13 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
-        public async Task<List<Notes>> GetAllNotes()
+        public async Task<List<Notes>> GetAllNotes(int Userid)
         {
-            return await dbContext.notes.ToListAsync();
+            // return await dbContext.notes.ToListAsync();
+            return await dbContext.notes.Where(u => u.Userid == Userid)
+
+                 .Include(u => u.user.email)
+                 .ToListAsync();
         }
 
         public bool DeleteNote(int noteId)
@@ -142,15 +146,19 @@ namespace RepositoryLayer.Services
             }
 
         }
-        public async Task Trash(int noteId)
+
+        public async Task TrashNote(int noteId)
         {
             try
             {
-                var note = dbContext.notes.FirstOrDefault(u => u.noteId == noteId);
-                note.IsTrash = true;
-                await dbContext.SaveChangesAsync();
+                Notes note = dbContext.notes.FirstOrDefault(e => e.noteId == noteId);
+                if (note != null)
+                {
+                    note.IsTrash = true;
+                    await dbContext.SaveChangesAsync();
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }

@@ -19,6 +19,7 @@ namespace RepositoryLayer.Services
 
         public DbSet<User> users { get; set; }
         public DbSet<Notes> notes { get; set; }
+        public  DbSet<Label> label { get; set; }
 
         protected override void
 
@@ -31,6 +32,8 @@ namespace RepositoryLayer.Services
             //.HasOne(u => u.User)
             //.WithMany()
             //.HasForeignKey(u => u.userId);
+
+           
         }
 
 

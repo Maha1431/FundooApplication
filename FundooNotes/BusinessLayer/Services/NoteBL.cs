@@ -45,12 +45,12 @@ namespace BusinessLayer.Services
                 throw e;
             }
         }
-        public async Task<List<Notes>> GetAllNotes()
+        public async Task<List<Notes>> GetAllNotes(int Userid)
         {
 
             try
             {
-                return await noteRL.GetAllNotes();
+                return await noteRL.GetAllNotes(Userid);
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace BusinessLayer.Services
             try
             {
                 var result = this.noteRL.IsPin(noteId);
-                if(noteId != 0)
+                if (noteId != 0)
                 {
                     return result;
                 }
@@ -112,6 +112,17 @@ namespace BusinessLayer.Services
                 {
                     throw new Exception("Note cant be pinned");
                 }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public async Task TrashNote(int noteId)
+        {
+            try
+            {
+                await noteRL.TrashNote(noteId);
             }
             catch(Exception e)
             {
