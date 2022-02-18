@@ -66,8 +66,26 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
-       
-        
+        public async Task DeleteAddress( int AddressId)
+        {
+            try
+            {
+                UserAddress userAddress = dbContext.Address.Where(e => e.AddressId == AddressId).FirstOrDefault();
+
+
+                dbContext.Address.Remove(userAddress);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+
+
+
+        }
+
     }
 }
 

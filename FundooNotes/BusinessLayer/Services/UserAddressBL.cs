@@ -30,6 +30,7 @@ namespace BusinessLayer.Services
             }
         }
 
+
         public async Task<List<UserAddress>> GetUserAddresses(int Userid)
         {
             try
@@ -48,6 +49,19 @@ namespace BusinessLayer.Services
             try
             {
                  await userAddressRL.UpdateUserAddress(userAddress, Userid,AddressId);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+        }
+
+        public async Task DeleteAddress(int AddressId)
+        {
+            try
+            {
+                 await userAddressRL.DeleteAddress(AddressId);
             }
             catch (Exception e)
             {

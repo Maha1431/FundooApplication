@@ -11,7 +11,7 @@ namespace RepositoryLayer.Interface
     {
          Task AddUserAddress(UserAddressPostModel userAddress, int Userid);
          Task<List<UserAddress>> GetUserAddresses(int Userid);
-         Task UpdateUserAddress(GetUserAddressModel userAddress, int userid, int AddressId);
-       // Task<UserAddress> GetAllUserAddressByAddressId(int userId, int AddressId);
+         Task UpdateUserAddress(GetUserAddressModel userAddress, int Userid, int AddressId);
+         Task DeleteAddress(int AddressId);
     }
 }

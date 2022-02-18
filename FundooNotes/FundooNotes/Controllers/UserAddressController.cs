@@ -78,5 +78,20 @@ namespace FundooNotes.Controllers
             }
 
         }
+        [HttpDelete("deleteAddress/{AddressId}")]
+        public IActionResult eleteUserAddress(int AddressId)
+        {
+            try
+            {
+                this.userAddressBL.DeleteAddress(AddressId);
+                return this.Ok(new { success = true, Message = $"Address is deleted successfully" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
