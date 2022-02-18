@@ -28,11 +28,11 @@ namespace BusinessLayer.Services
                 throw ex;
             }
         }
-        public IEnumerable<Label> GetLabelsByNoteID(int Userid, int noteId)
+        public async Task<List<Label>> GetAllLabels(int Userid)
         {
             try
             {
-                return labelRL.GetLabelsByNoteID(Userid, noteId);
+                return await labelRL.GetAllLabels(Userid);
             }
             catch (Exception)
             {
@@ -72,5 +72,17 @@ namespace BusinessLayer.Services
             }
         }
 
+        public async Task<List<Label>> GetLabelsBynoteId(int Userid, int noteId)
+        {
+            try
+            {
+                return await labelRL.GetLabelsBynoteId(Userid,noteId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

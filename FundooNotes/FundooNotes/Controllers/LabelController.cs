@@ -26,18 +26,17 @@ namespace FundooNotes.Controllers
         }
 
         [Authorize]
-        [HttpPost("createlabel")]
+        [HttpPost("createlabel/{noteId}")]
         public async Task<IActionResult> CreateLabel(LabelModel labelModel, int noteId)
         {
             try
             {
-                // int userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "userid").Value);
+                // int userID = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == " Userid").Value);
                 var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("Userid", StringComparison.InvariantCultureIgnoreCase));
                 int UserId = Int32.Parse(userId.Value);
 
-                List<Label> labels = new List<Label>();
-
-                labels = await labelBL.CreateLabel(UserId, noteId, labelModel);
+              
+                 await labelBL.CreateLabel(noteId, UserId, labelModel);
 
                 return this.Ok(new { success = true, message = "Label added successfully", response = labelModel, noteId });
 
@@ -49,13 +48,21 @@ namespace FundooNotes.Controllers
             }
         }
         [Authorize]
-        [HttpGet("GetLabelsByNoteID/{noteId}")]
-        public IEnumerable GetLabelsByNoteID(int noteId)
+        [HttpGet("GetAllLabels")]
+        public async Task<IActionResult> GetAllLabels()
         {
+
             try
             {
-                int userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Userid").Value);
-                return labelBL.GetLabelsByNoteID(userId, noteId);
+                int userID = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Userid").Value);
+
+                var LabelList = new List<Label>();
+                var NoteList = new List<Notes>();
+                LabelList = await labelBL.GetAllLabels(userID);
+               
+                return this.Ok(new { Success = true, message = $"GetAll Labels of Userid={userID} ", data = LabelList });
+             
+
             }
             catch (Exception)
             {
@@ -63,7 +70,7 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
-       // [Authorize]
+        // [Authorize]
         [HttpPut("updateLabel/{labelId}")]
 
         public IActionResult UpdateNotes(int labelId, LabelModel labelModel)
@@ -105,6 +112,27 @@ namespace FundooNotes.Controllers
             {
 
                 throw;
+            }
+        }
+        [Authorize]
+        [HttpGet("getAllLabelsbynoteId/{noteId}")]
+        public async Task<IActionResult> GetAllLabelsBynoteId(int noteId)
+        {
+            try
+            {
+               int userID = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Userid").Value);
+
+                var LabelList = new List<Label>();
+                var NoteList = new List<Notes>();
+                LabelList = await labelBL.GetLabelsBynoteId(userID,noteId);
+
+                return this.Ok(new { Success = true, message = $"GetAll Labels of Userid={userID} ", data = LabelList });
+             //   return this.Ok(new { Success = true, message = $"Note datas are: ", data = NoteList });
+
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

@@ -10,10 +10,12 @@ namespace RepositoryLayer.Interface
     public interface ILabelRL
     {
         Task<List<Label>> CreateLabel(int noteId, int Userid, LabelModel labelModel);
-         IEnumerable<Label> GetLabelsByNoteID(int Userid, int noteId);
+        Task<List<Label>> GetAllLabels(int Userid);
         bool UpdateLabel(int labelId, LabelModel labelModel);
         bool DeleteLabel(int labelId);
-        
-    
+        Task<List<Label>> GetLabelsBynoteId(int Userid, int noteId);
+
+
+
     }
 }

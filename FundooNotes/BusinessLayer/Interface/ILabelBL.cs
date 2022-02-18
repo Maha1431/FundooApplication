@@ -11,8 +11,9 @@ namespace BusinessLayer.Interface
   public interface ILabelBL
     {
         Task<List<Label>> CreateLabel(int noteId, int Userid, LabelModel labelModel);
-        public IEnumerable<Label> GetLabelsByNoteID(int Userid, int noteId);
+        Task<List<Label>> GetAllLabels(int Userid);
         bool UpdateLabel(int labelId, LabelModel labelModel);
         bool DeleteLabel(int labelId);
+        Task<List<Label>> GetLabelsBynoteId(int Userid, int noteId);
     }
 }

@@ -39,8 +39,6 @@ namespace FundooNotes.Controllers
         {
             try
             {
-                /* var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("userId", StringComparison.InvariantCultureIgnoreCase));
-                 int UserId = Int32.Parse(userId.Value);*/
                 int userId = Convert.ToInt32(User.Claims.FirstOrDefault(e => e.Type == "Userid").Value);
                 await this.noteBL.AddNote(userId,notePost);
 
@@ -89,7 +87,8 @@ namespace FundooNotes.Controllers
                 }
                 else
                 {
-                  //  noteList = await noteBL.GetAllNotes(Userid);
+                    
+                   // noteList = await noteBL.GetAllNotes(Userid);
                     serializedNoteList = JsonConvert.SerializeObject(noteList);
                     redisnoteList = Encoding.UTF8.GetBytes(serializedNoteList);
                 }
@@ -149,7 +148,7 @@ namespace FundooNotes.Controllers
             }
         }
 
-        [HttpPut("archiveNote/{noteID}")]
+        [HttpPut("archiveNote/{noteId}")]
         public async Task<IActionResult> IsArchieve(int noteId)
         {
             try

@@ -38,8 +38,8 @@ namespace RepositoryLayer.Services
                 dbContext.label.Add(label);
                 await dbContext.SaveChangesAsync();
                 return await dbContext.label.Where(u => u.Userid == Userid)
-                    .Include(u => u.Userid)
-                    .Include(u => u.noteId)
+                    .Include(u => u.User)
+                    .Include(u => u.Notes)
                      .ToListAsync();
 
             }
@@ -48,24 +48,21 @@ namespace RepositoryLayer.Services
                 throw ex;
             }
         }
-        public IEnumerable<Label> GetLabelsByNoteID(int Userid, int noteId)
+        public async Task<List<Label>> GetAllLabels(int Userid)
         {
+            Label label = new Label();
             try
             {
-                var result = dbContext.label.Where(e => e.noteId == noteId && e.Userid == Userid).ToList();
-                if (result != null)
-                {
-                    return result;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
+                return await dbContext.label.Where(u => u.Userid == Userid)
+                    .Include(u => u.Notes)
+                    .Include(u => u.User)
+                    .ToListAsync();
 
-                throw;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -110,5 +107,24 @@ namespace RepositoryLayer.Services
                 throw e;
             }
         }
+        public async Task<List<Label>> GetLabelsBynoteId(int Userid, int noteId)
+        {
+
+            //Label label = new Label();
+            try
+            {
+                return await dbContext.label.Where(u => u.Userid == Userid && u.noteId == noteId)
+                    .Include(u => u.Notes)
+                    .Include(u => u.User)
+                    .ToListAsync();
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }   
+            
     }
 }

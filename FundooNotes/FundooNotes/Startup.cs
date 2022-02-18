@@ -36,6 +36,9 @@ namespace FundooNotes
         {
             services.AddDbContext<FundooNotesDbContext>(opts => opts.UseSqlServer(Configuration["ConnectionStrings:FundooNotes"]));
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
             services.AddMemoryCache();
             services.AddStackExchangeRedisCache(options =>
             {
@@ -77,6 +80,9 @@ namespace FundooNotes
             services.AddTransient<INoteRL, NoteRL>();
             services.AddTransient<ILabelBL, LabelBL>();
             services.AddTransient<ILabelRL, LabelRL>();
+            services.AddTransient<IUserAddressBL, UserAddressBL>();
+            services.AddTransient<IUserAddressRL, UserAddressRL>();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

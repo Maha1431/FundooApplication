@@ -29,6 +29,29 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Address",
+                columns: table => new
+                {
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Userid = table.Column<int>(type: "int", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Address", x => x.AddressId);
+                    table.ForeignKey(
+                        name: "FK_Address_users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "notes",
                 columns: table => new
                 {
@@ -84,6 +107,11 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Address_Userid",
+                table: "Address",
+                column: "Userid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_label_noteId",
                 table: "label",
                 column: "noteId");
@@ -108,6 +136,9 @@ namespace RepositoryLayer.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Address");
+
             migrationBuilder.DropTable(
                 name: "label");
 

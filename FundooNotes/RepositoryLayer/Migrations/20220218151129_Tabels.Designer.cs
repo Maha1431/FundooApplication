@@ -10,7 +10,7 @@ using RepositoryLayer.Services;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooNotesDbContext))]
-    [Migration("20220217111929_Tabels")]
+    [Migration("20220218151129_Tabels")]
     partial class Tabels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,39 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("users");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.UserAddress", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Userid")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("Userid");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.User", "User")
@@ -155,6 +188,20 @@ namespace RepositoryLayer.Migrations
                         .HasForeignKey("Userid");
 
                     b.Navigation("user");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entities.UserAddress", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entities.User", "User")
+                        .WithMany("Addressess")
+                        .HasForeignKey("Userid");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entities.User", b =>
+                {
+                    b.Navigation("Addressess");
                 });
 #pragma warning restore 612, 618
         }

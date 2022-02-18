@@ -20,6 +20,7 @@ namespace RepositoryLayer.Services
         public DbSet<User> users { get; set; }
         public DbSet<Notes> notes { get; set; }
         public  DbSet<Label> label { get; set; }
+        public DbSet<UserAddress> Address { get; set; }
 
         protected override void
 
@@ -28,13 +29,14 @@ namespace RepositoryLayer.Services
             modelBuilder.Entity<User>()
             .HasIndex(u => u.email)
             .IsUnique();
-            //modelBuilder.Entity<Note>()
-            //.HasOne(u => u.User)
-            //.WithMany()
-            //.HasForeignKey(u => u.userId);
+            /*modelBuilder.Entity<UserAddress>()
+                .HasOne(u => u.User)
+                .WithMany()
+                .HasForeignKey(u => u.Userid)
+                .OnDelete(DeleteBehavior.Cascade); //Cascade behaviour*/
+        }                                         
 
-           
-        }
+        
 
 
 

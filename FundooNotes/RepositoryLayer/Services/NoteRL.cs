@@ -21,14 +21,14 @@ namespace RepositoryLayer.Services
             this.dbContext = dbContext;
 
         }
-        public async Task AddNote(int UserId, NotePostModel notePost)
+        public async Task AddNote(int Userid, NotePostModel notePost)
         {
             try
             {
               // var user = dbContext.users.FirstOrDefault(x => x.Userid == userId);
                 Notes note = new Notes();
                 note.noteId = new Notes().noteId;
-                note.Userid = UserId;
+                note.Userid = Userid;
                 note.Title = notePost.Title;
                 note.Description = notePost.Description;
                 note.IsReminder = notePost.IsReminder;
@@ -76,7 +76,7 @@ namespace RepositoryLayer.Services
             // return await dbContext.notes.ToListAsync();
             return await dbContext.notes.Where(u => u.Userid == Userid)
 
-                 .Include(u => u.user.email)
+                 .Include(u => u.user)
                  .ToListAsync();
         }
 
