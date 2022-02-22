@@ -22,11 +22,14 @@ namespace RepositoryLayer.Entities
         public DateTime registereddate { get; set; }
         public DateTime  modifieddate { get; set; }
 
-        // public virtual ICollection<Notes> Notes { get; set; }
+       
 
-        //   public virtual ICollection<UserAddress>Addresses { get; set; }
         public virtual IList<UserAddress> Addressess { get; set; }
+        public virtual IList<Collabarator> Collabarators { get; set; }
 
+        public virtual ICollection<Notes> Notes { get; set; }
+
+        public virtual ICollection<Label> Labels { get; set; }
 
     }
 }

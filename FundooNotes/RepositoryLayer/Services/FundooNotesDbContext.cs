@@ -21,6 +21,7 @@ namespace RepositoryLayer.Services
         public DbSet<Notes> notes { get; set; }
         public  DbSet<Label> label { get; set; }
         public DbSet<UserAddress> Address { get; set; }
+        public DbSet<Collabarator> collabarators { get; set; }
 
         protected override void
 
@@ -29,6 +30,9 @@ namespace RepositoryLayer.Services
             modelBuilder.Entity<User>()
             .HasIndex(u => u.email)
             .IsUnique();
+            modelBuilder.Entity<UserAddress>()
+            .Property(b => b.Type)
+            .HasDefaultValue("Home");
             /*modelBuilder.Entity<UserAddress>()
                 .HasOne(u => u.User)
                 .WithMany()

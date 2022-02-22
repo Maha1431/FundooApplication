@@ -78,11 +78,14 @@ namespace FundooNotes.Controllers
             }
 
         }
+        [Authorize]
         [HttpDelete("deleteAddress/{AddressId}")]
-        public IActionResult eleteUserAddress(int AddressId)
+        public   IActionResult deleteUserAddress(int AddressId)
         {
             try
             {
+                var userId = User.Claims.FirstOrDefault(x => x.Type.ToString().Equals("userId", StringComparison.InvariantCultureIgnoreCase));
+                int Userid = Int32.Parse(userId.Value);
                 this.userAddressBL.DeleteAddress(AddressId);
                 return this.Ok(new { success = true, Message = $"Address is deleted successfully" });
 

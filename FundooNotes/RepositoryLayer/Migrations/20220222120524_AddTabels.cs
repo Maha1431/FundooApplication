@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class Tabels : Migration
+    public partial class AddTabels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,7 +35,7 @@ namespace RepositoryLayer.Migrations
                     AddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Userid = table.Column<int>(type: "int", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Home"),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -80,6 +80,33 @@ namespace RepositoryLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "collabarators",
+                columns: table => new
+                {
+                    CollabId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CollabEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    noteId = table.Column<int>(type: "int", nullable: true),
+                    Userid = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_collabarators", x => x.CollabId);
+                    table.ForeignKey(
+                        name: "FK_collabarators_notes_noteId",
+                        column: x => x.noteId,
+                        principalTable: "notes",
+                        principalColumn: "noteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_collabarators_users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "users",
+                        principalColumn: "Userid",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "label",
                 columns: table => new
                 {
@@ -112,6 +139,16 @@ namespace RepositoryLayer.Migrations
                 column: "Userid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_collabarators_noteId",
+                table: "collabarators",
+                column: "noteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_collabarators_Userid",
+                table: "collabarators",
+                column: "Userid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_label_noteId",
                 table: "label",
                 column: "noteId");
@@ -138,6 +175,9 @@ namespace RepositoryLayer.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Address");
+
+            migrationBuilder.DropTable(
+                name: "collabarators");
 
             migrationBuilder.DropTable(
                 name: "label");

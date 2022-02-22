@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RepositoryLayer.Services
 {
     public class LabelRL : ILabelRL
     {
         FundooNotesDbContext dbContext;
-      
+
         public LabelRL(FundooNotesDbContext dbContext)
         {
             this.dbContext = dbContext;
@@ -50,13 +51,40 @@ namespace RepositoryLayer.Services
         }
         public async Task<List<Label>> GetAllLabels(int Userid)
         {
-            Label label = new Label();
+           
             try
             {
-                return await dbContext.label.Where(u => u.Userid == Userid)
-                    .Include(u => u.Notes)
-                    .Include(u => u.User)
-                    .ToListAsync();
+               
+                    Label label = new Label();
+                    return await dbContext.label.Where(u => u.Userid == Userid)        
+                            .Include(u => u.Notes)
+                             .Include(u => u.User)
+                             .ToListAsync();
+                       /*  .Join(dbContext.users,
+                        
+                         u => u.Userid,
+                         b => b.Userid,
+                        (u, b) => new LabelResponse
+                        {
+                            Userid = (int)u.Userid,
+                            email = b.email,
+                            LabelName = u.LabelName,
+                            registereddate = b.registereddate,
+                          
+                        })
+                         .Join(dbContext.notes,
+                         n => n.Userid,
+                         k => k.Userid,
+                         (n, k) => new LabelResponse
+                         {
+                             Title = n.Title,
+                             Description = n.Description,
+                             color = n.color,
+                         })
+                         
+                         
+                         .ToListAsync();*/
+            
 
 
             }
@@ -81,7 +109,7 @@ namespace RepositoryLayer.Services
                 else
                     return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -102,7 +130,7 @@ namespace RepositoryLayer.Services
                     return false;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -124,7 +152,7 @@ namespace RepositoryLayer.Services
             {
                 throw ex;
             }
-        }   
-            
+        }
+
     }
 }

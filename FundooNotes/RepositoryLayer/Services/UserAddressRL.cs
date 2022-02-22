@@ -29,6 +29,23 @@ namespace RepositoryLayer.Services
                 address.AddressId = new UserAddress().AddressId;
                 address.Userid = Userid;
                 address.Type = userAddress.Type;
+                
+                    if (address.Type == "Home")
+                    {
+                        address.Type = "Home";
+                    }
+                    else if (address.Type == "Work")
+                    {
+                        address.Type = "Work";
+                    }
+                    else
+                    {
+                        // address.Type != "Home" && address.Type != "Work"
+                        address.Type = "Other";
+                    }
+
+                
+
                 address.Address = userAddress.Address;
                 address.City = userAddress.City;
                 address.State = userAddress.State;
@@ -71,7 +88,10 @@ namespace RepositoryLayer.Services
             try
             {
                 UserAddress userAddress = dbContext.Address.Where(e => e.AddressId == AddressId).FirstOrDefault();
-
+                if (userAddress.Equals(null))
+                {
+                    throw new Exception("No User address for this userid.");
+                }
 
                 dbContext.Address.Remove(userAddress);
                 await dbContext.SaveChangesAsync();

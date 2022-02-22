@@ -5,10 +5,16 @@ using System.Text;
 
 namespace CommonLayer.UserAddress
 {
+
   public  class UserAddressPostModel
     {
+      
+        public UserAddressPostModel()
+        {
+            Type = "Home";
+        }
         [Required]
-        public string Type { get; set; }
+        public string Type{ get; set; }
 
         [Required]
         [RegularExpression("(?=.*[a-zA-Z]).{4,50}$", ErrorMessage = "address has minimum 4 characters")]

@@ -73,11 +73,21 @@ namespace RepositoryLayer.Services
         }
         public async Task<List<Notes>> GetAllNotes(int Userid)
         {
-            // return await dbContext.notes.ToListAsync();
-            return await dbContext.notes.Where(u => u.Userid == Userid)
-
-                 .Include(u => u.user)
-                 .ToListAsync();
+            try
+            {
+               // Notes notes = new Notes();
+                return await dbContext.notes.Where(n => n.Userid == Userid)
+                    .Include(u => u.user)
+                    .ToListAsync();
+                    
+                // .Include(u => u.user)
+              
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+           
         }
 
         public bool DeleteNote(int noteId)

@@ -38,7 +38,7 @@ namespace RepositoryLayer.Services
             try
             {
                 var result = dbContext.users.Include(u => u.Addressess).ToList();
-                return result;
+                 return result;
             }
             catch (Exception e)
             {
@@ -235,7 +235,7 @@ namespace RepositoryLayer.Services
                     Console.WriteLine("Access is denied. " +
                         "Queue might be a system queue.");
                 }
-               //  Handle other sources of MessageQueueException
+              
              
             }
         }

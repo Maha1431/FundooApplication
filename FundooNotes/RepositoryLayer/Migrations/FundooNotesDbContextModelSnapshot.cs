@@ -19,6 +19,31 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Collabarator", b =>
+                {
+                    b.Property<int>("CollabId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CollabEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Userid")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("noteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CollabId");
+
+                    b.HasIndex("Userid");
+
+                    b.HasIndex("noteId");
+
+                    b.ToTable("collabarators");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.Property<int>("labelId")
@@ -152,7 +177,9 @@ namespace RepositoryLayer.Migrations
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Home");
 
                     b.Property<int?>("Userid")
                         .HasColumnType("int");
@@ -164,10 +191,25 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("RepositoryLayer.Entities.Collabarator", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entities.User", "User")
+                        .WithMany("Collabarators")
+                        .HasForeignKey("Userid");
+
+                    b.HasOne("RepositoryLayer.Entities.Notes", "Notes")
+                        .WithMany()
+                        .HasForeignKey("noteId");
+
+                    b.Navigation("Notes");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RepositoryLayer.Entities.Label", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Labels")
                         .HasForeignKey("Userid");
 
                     b.HasOne("RepositoryLayer.Entities.Notes", "Notes")
@@ -182,7 +224,7 @@ namespace RepositoryLayer.Migrations
             modelBuilder.Entity("RepositoryLayer.Entities.Notes", b =>
                 {
                     b.HasOne("RepositoryLayer.Entities.User", "user")
-                        .WithMany()
+                        .WithMany("Notes")
                         .HasForeignKey("Userid");
 
                     b.Navigation("user");
@@ -200,6 +242,12 @@ namespace RepositoryLayer.Migrations
             modelBuilder.Entity("RepositoryLayer.Entities.User", b =>
                 {
                     b.Navigation("Addressess");
+
+                    b.Navigation("Collabarators");
+
+                    b.Navigation("Labels");
+
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }
