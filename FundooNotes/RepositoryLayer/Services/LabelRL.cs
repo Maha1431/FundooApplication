@@ -50,16 +50,46 @@ namespace RepositoryLayer.Services
                 throw ex;
             }
         }
-        public async Task<List<Label>> GetAllLabels(int Userid)
+        public async Task<List<LabelResponse>> GetAllLabels(int Userid)
         {
             try
             {
                 Label label = new Label();
-                return await dbContext.label.Where(i => i.Userid == Userid)
-                    .Include(u => u.Notes)
-                     .Include(u => u.User)
-                     .ToListAsync();
-                
+                return await dbContext.label.Where(l => l.Userid == Userid)
+                   
+                   .Join(dbContext.users
+                  .Join(dbContext.notes,
+                    u => u.Userid,
+                    n => n.Userid,
+                    (u, n) => new NoteUserResponse
+                    {
+                        Userid = u.Userid,
+                        noteId = n.noteId,
+                        firstname = u.firstname,
+                        lastname = u.lastname,
+                        color = n.color,
+                        registereddate = n.CreatedDate,
+                        Title = n.Title,
+                        Description = n.Description,
+                        email = u.email,
+
+                    }),
+                   l => l.Notes.noteId,
+                    un => un.noteId,
+                    (l, un) => new LabelResponse
+                    {
+                        Userid = un.Userid,
+                        noteId = l.Notes.noteId,
+                        Title = un.Title,
+                        Description = un.Description,
+                         color = un.color,
+                         email = un.email,
+                        LabelName = l.LabelName
+
+
+                    }).ToListAsync();
+
+
             }
             catch (Exception ex)
             {

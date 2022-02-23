@@ -28,7 +28,7 @@ namespace BusinessLayer.Services
                 throw ex;
             }
         }
-        public async Task<List<Label>> GetAllLabels(int Userid)
+        public async Task<List<LabelResponse>> GetAllLabels(int Userid)
         {
             try
             {

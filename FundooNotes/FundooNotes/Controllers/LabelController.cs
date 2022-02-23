@@ -56,12 +56,13 @@ namespace FundooNotes.Controllers
             {
                 int userID = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Userid").Value);
 
-                var LabelList = new List<Label>();
-              //  var NoteList = new List<Notes>();
+                var LabelList = new List<LabelResponse>();
+                var NoteList = new List<Notes>();
                 LabelList = await labelBL.GetAllLabels(userID);
-               
-                return this.Ok(new { Success = true, message = $"GetAll Labels of Userid={userID} ", data = LabelList });
-             
+
+
+                return this.Ok(new { Success = true, message = $"GetAll Labels of UserId={userID} ", data = LabelList });
+                return this.Ok(new { Success = true, message = $"GetAll Notes of UserId={userID} ", data = NoteList });
 
             }
             catch (Exception)
