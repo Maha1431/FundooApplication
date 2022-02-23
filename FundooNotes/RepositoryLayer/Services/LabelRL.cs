@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Label;
+using CommonLayer.Notes;
 using Microsoft.EntityFrameworkCore;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Interface;
@@ -51,49 +52,20 @@ namespace RepositoryLayer.Services
         }
         public async Task<List<Label>> GetAllLabels(int Userid)
         {
-           
             try
             {
-               
-                    Label label = new Label();
-                    return await dbContext.label.Where(u => u.Userid == Userid)        
-                            .Include(u => u.Notes)
-                             .Include(u => u.User)
-                             .ToListAsync();
-                       /*  .Join(dbContext.users,
-                        
-                         u => u.Userid,
-                         b => b.Userid,
-                        (u, b) => new LabelResponse
-                        {
-                            Userid = (int)u.Userid,
-                            email = b.email,
-                            LabelName = u.LabelName,
-                            registereddate = b.registereddate,
-                          
-                        })
-                         .Join(dbContext.notes,
-                         n => n.Userid,
-                         k => k.Userid,
-                         (n, k) => new LabelResponse
-                         {
-                             Title = n.Title,
-                             Description = n.Description,
-                             color = n.color,
-                         })
-                         
-                         
-                         .ToListAsync();*/
-            
-
-
+                Label label = new Label();
+                return await dbContext.label.Where(i => i.Userid == Userid)
+                    .Include(u => u.Notes)
+                     .Include(u => u.User)
+                     .ToListAsync();
+                
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
         public bool UpdateLabel(int labelId, LabelModel labelModel)
         {
             try
@@ -137,8 +109,7 @@ namespace RepositoryLayer.Services
         }
         public async Task<List<Label>> GetLabelsBynoteId(int Userid, int noteId)
         {
-
-            //Label label = new Label();
+          //Label label = new Label();
             try
             {
                 return await dbContext.label.Where(u => u.Userid == Userid && u.noteId == noteId)

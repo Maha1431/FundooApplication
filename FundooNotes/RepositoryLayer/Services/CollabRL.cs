@@ -49,7 +49,7 @@ namespace RepositoryLayer.Services
             }
         }
 
-        public async Task<List<Collabarator>> GetAllCollabs(int Userid, int noteId)
+        public async Task<List<Collabarator>> GetAllCollabsbynoteId(int Userid, int noteId)
         {
             try
             {

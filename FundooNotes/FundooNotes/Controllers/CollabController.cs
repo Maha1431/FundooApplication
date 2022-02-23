@@ -44,8 +44,8 @@ namespace FundooNotes.Controllers
             }
         }
         [Authorize]
-        [HttpGet("getAllCollabs")]
-        public async Task<IActionResult> GetAllCollabs(int noteId)
+        [HttpGet("getAllCollabsbynoteId/{noteId}")]
+        public async Task<IActionResult> GetAllCollabsbynoteId(int noteId)
         {
 
             try
@@ -53,7 +53,7 @@ namespace FundooNotes.Controllers
                 int userID = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Userid").Value);
 
                 var CollabrationList = new List<Collabarator>();
-                CollabrationList = await collabaratorBL.GetAllCollabs(userID,noteId);
+                CollabrationList = await collabaratorBL.GetAllCollabsbynoteId(userID,noteId);
 
                 return this.Ok(new { Success = true, message = $"GetAll Collab of Userid={userID} ", data = CollabrationList });
 

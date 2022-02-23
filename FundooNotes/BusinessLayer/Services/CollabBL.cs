@@ -29,11 +29,11 @@ namespace BusinessLayer.Services
             }
         }
 
-        public async Task<List<Collabarator>> GetAllCollabs(int Userid, int noteId)
+        public async Task<List<Collabarator>> GetAllCollabsbynoteId(int Userid, int noteId)
         {
             try
             {
-                return await collabratorRL.GetAllCollabs(Userid,noteId);
+                return await collabratorRL.GetAllCollabsbynoteId(Userid,noteId);
             }
             catch (Exception)
             {

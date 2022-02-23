@@ -10,8 +10,6 @@ namespace CommonLayer.User
        
         public string email { get; set; }
 
-        
-        
         public string password { get; set; }
     }
 }

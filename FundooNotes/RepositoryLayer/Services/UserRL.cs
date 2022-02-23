@@ -37,7 +37,10 @@ namespace RepositoryLayer.Services
         {
             try
             {
-                var result = dbContext.users.Include(u => u.Addressess).ToList();
+                var result = dbContext.users
+                    .Include(u => u.Addressess)
+                    .Include(u => u.Notes)
+                    .Include(u => u.Labels).ToList();
                  return result;
             }
             catch (Exception e)
